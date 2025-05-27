@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Ready Notification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      width: 300px;
+    }
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #20b858;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Order Notification</h2>
+    <input type="text" id="shopNumber" placeholder="Enter Shopkeeper's WhatsApp Number" />
+    <input type="text" id="customerNumber" placeholder="Enter Customer's WhatsApp Number" />
+    <button onclick="sendMessage()">Send WhatsApp Message</button>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const shopNumber = document.getElementById('shopNumber').value.trim();
+      const customerNumber = document.getElementById('customerNumber').value.trim();
+
+      if (!shopNumber || !customerNumber) {
+        alert('Please enter both phone numbers!');
+        return;
+      }
+
+      const message = encodeURIComponent("Hello! Your order is ready to be received. Thank you for shopping with us!");
+
+      // WhatsApp API URL
+      const whatsappURL = `https://wa.me/${customerNumber}?text=${message}`;
+
+      // Open WhatsApp in a new tab
+      window.open(whatsappURL, '_blank');
+
+      // Optionally, notify the shopkeeper too (can be customized)
+      // const shopMessage = encodeURIComponent("You have successfully notified the customer.");
+      // const shopWhatsappURL = `https://wa.me/${shopNumber}?text=${shopMessage}`;
+      // window.open(shopWhatsappURL, '_blank');
+    }
+  </script>
+
+</body>
+</html>
