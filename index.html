@@ -65,10 +65,8 @@
 <div class="container">
   <h2>Order Ready Notification</h2>
   <input type="text" id="shopNumber" placeholder="Shopkeeper WhatsApp Number" />
-  <div class="note">(Enter without country code or with. Default is +91)</div>
 
-  <input type="text" id="customerNumbers" placeholder="Customer WhatsApp Numbers (comma-separated)" />
-  <div class="note">(Enter multiple numbers separated by commas. Default is +91)</div>
+  <input type="text" id="customerNumbers" placeholder="Customer WhatsApp Numbers" />
 
   <button onclick="sendMessage()">Send WhatsApp Messages</button>
 </div>
@@ -118,7 +116,7 @@
       return;
     }
 
-    const message = encodeURIComponent("Hello! Your order is ready to be received. Thank you for shopping with us!");
+    const message = encodeURIComponent("प्रिय ग्राहक, आपले कपडे दिलेल्या तारखेनुसार सुंदरपणे शिवले गेले आहेत. कृपया आपल्या सोयी प्रमाणे *एक्सपर्ट मेन्स टेलर* येथे येऊन घेऊ शकता. आम्ही नेहमी आपल्या सेवेची वाट पाहत आहोत!");
 
     customerNumbers.forEach(number => {
       const whatsappURL = `https://wa.me/${number}?text=${message}`;
