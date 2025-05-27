@@ -1,121 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Order Ready Notification</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f2f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .container {
-      background: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      width: 320px;
-    }
-    .container h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #25D366;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-    button:hover {
-      background: #20b858;
-    }
-    .note {
-      font-size: 12px;
-      color: #555;
-      margin-top: -6px;
-      margin-bottom: 12px;
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Order Ready Notification</title>
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="favicon.png" />
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  .container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    width: 340px;
+  }
+  .container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #25D366;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  button:hover {
+    background: #20b858;
+  }
+  .note {
+    font-size: 12px;
+    color: #555;
+    margin-top: -6px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+</style>
 </head>
 <body>
 
-  <div class="container">
-    <h2>Order Ready Notification</h2>
-    <input type="text" id="shopNumber" placeholder="Shopkeeper WhatsApp Number" />
-    <div class="note">(Enter without country code or with. Default is +91)</div>
-    <input type="text" id="customerNumber" placeholder="Customer WhatsApp Number" />
-    <div class="note">(Enter without country code or with. Default is +91)</div>
-    <button onclick="sendMessage()">Send WhatsApp Message</button>
-  </div>
+<div class="container">
+  <h2>Order Ready Notification</h2>
+  <input type="text" id="shopNumber" placeholder="Shopkeeper WhatsApp Number" />
+  <div class="note">(Enter without country code or with. Default is +91)</div>
 
-  <script>
-    const DEFAULT_COUNTRY_CODE = '91';
+  <input type="text" id="customerNumbers" placeholder="Customer WhatsApp Numbers (comma-separated)" />
+  <div class="note">(Enter multiple numbers separated by commas. Default is +91)</div>
 
-    function formatNumber(number) {
-      // Remove all non-digit characters
-      let cleaned = number.replace(/\D/g, '');
+  <button onclick="sendMessage()">Send WhatsApp Messages</button>
+</div>
 
-      // If number already starts with country code (91 for example), keep it
-      if (cleaned.startsWith(DEFAULT_COUNTRY_CODE)) {
-        return cleaned;
-      }
-      // Else prepend default country code
-      return DEFAULT_COUNTRY_CODE + cleaned;
+<script>
+  const DEFAULT_COUNTRY_CODE = '91';
+
+  function formatNumber(number) {
+    let cleaned = number.replace(/\D/g, '');
+    if (cleaned.startsWith(DEFAULT_COUNTRY_CODE)) {
+      return cleaned;
+    }
+    return DEFAULT_COUNTRY_CODE + cleaned;
+  }
+
+  function isValidPhoneNumber(number) {
+    return /^\d{10,15}$/.test(number);
+  }
+
+  function sendMessage() {
+    let shopNumber = document.getElementById('shopNumber').value.trim();
+    let customerNumbersInput = document.getElementById('customerNumbers').value.trim();
+
+    if (!shopNumber || !customerNumbersInput) {
+      alert('Please enter the shopkeeper and customer phone numbers!');
+      return;
     }
 
-    function isValidPhoneNumber(number) {
-      // Valid if only digits and length between 10 and 15
-      return /^\d{10,15}$/.test(number);
+    shopNumber = formatNumber(shopNumber);
+    if (!isValidPhoneNumber(shopNumber)) {
+      alert('Invalid shopkeeper number! Only digits allowed (10-15 digits).');
+      return;
     }
 
-    function sendMessage() {
-      let shopNumber = document.getElementById('shopNumber').value.trim();
-      let customerNumber = document.getElementById('customerNumber').value.trim();
+    const customerNumbers = customerNumbersInput.split(',')
+      .map(num => formatNumber(num.trim()))
+      .filter(num => num !== '');
 
-      if (!shopNumber || !customerNumber) {
-        alert('Please enter both phone numbers!');
-        return;
-      }
+    if (customerNumbers.length === 0) {
+      alert('Please enter at least one valid customer number.');
+      return;
+    }
 
-      // Format numbers by adding default country code if missing
-      shopNumber = formatNumber(shopNumber);
-      customerNumber = formatNumber(customerNumber);
+    const invalidNumbers = customerNumbers.filter(num => !isValidPhoneNumber(num));
+    if (invalidNumbers.length > 0) {
+      alert('These customer numbers are invalid:\n' + invalidNumbers.join(', '));
+      return;
+    }
 
-      if (!isValidPhoneNumber(shopNumber)) {
-        alert('Please enter a valid Shopkeeper phone number with digits only (10-15 digits).');
-        return;
-      }
+    const message = encodeURIComponent("Hello! Your order is ready to be received. Thank you for shopping with us!");
 
-      if (!isValidPhoneNumber(customerNumber)) {
-        alert('Please enter a valid Customer phone number with digits only (10-15 digits).');
-        return;
-      }
-
-      const message = encodeURIComponent("प्रिय ग्राहक, आपले कपडे दिलेल्या तारखेनुसार सुंदरपणे शिवले गेले आहेत. कृपया आपल्या सोयी प्रमाणे *एक्सपर्ट मेन्स टेलर* येथे येऊन घेऊ शकता. आम्ही नेहमी आपल्या सेवेची वाट पाहत आहोत!");
-
-      const whatsappURL = `https://wa.me/${customerNumber}?text=${message}`;
+    customerNumbers.forEach(number => {
+      const whatsappURL = `https://wa.me/${number}?text=${message}`;
       window.open(whatsappURL, '_blank');
-    }
-  </script>
+    });
+  }
+</script>
 
 </body>
 </html>
