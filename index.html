@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Order Ready Notification</title>
   <style>
     body {
@@ -18,7 +18,7 @@
       padding: 30px;
       border-radius: 8px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-      width: 300px;
+      width: 320px;
     }
     .container h2 {
       text-align: center;
@@ -30,52 +30,90 @@
       margin: 8px 0;
       border-radius: 4px;
       border: 1px solid #ccc;
+      font-size: 16px;
+      box-sizing: border-box;
     }
     button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background: #25D366;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 16px;
+      margin-top: 10px;
     }
     button:hover {
       background: #20b858;
+    }
+    .note {
+      font-size: 12px;
+      color: #555;
+      margin-top: -6px;
+      margin-bottom: 12px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
   <div class="container">
-    <h2>Order Notification</h2>
-    <input type="text" id="shopNumber" placeholder="Enter Shopkeeper's WhatsApp Number" />
-    <input type="text" id="customerNumber" placeholder="Enter Customer's WhatsApp Number" />
+    <h2>Order Ready Notification</h2>
+    <input type="text" id="shopNumber" placeholder="Shopkeeper WhatsApp Number" />
+    <div class="note">(Enter without country code or with. Default is +91)</div>
+    <input type="text" id="customerNumber" placeholder="Customer WhatsApp Number" />
+    <div class="note">(Enter without country code or with. Default is +91)</div>
     <button onclick="sendMessage()">Send WhatsApp Message</button>
   </div>
 
   <script>
+    const DEFAULT_COUNTRY_CODE = '91';
+
+    function formatNumber(number) {
+      // Remove all non-digit characters
+      let cleaned = number.replace(/\D/g, '');
+
+      // If number already starts with country code (91 for example), keep it
+      if (cleaned.startsWith(DEFAULT_COUNTRY_CODE)) {
+        return cleaned;
+      }
+      // Else prepend default country code
+      return DEFAULT_COUNTRY_CODE + cleaned;
+    }
+
+    function isValidPhoneNumber(number) {
+      // Valid if only digits and length between 10 and 15
+      return /^\d{10,15}$/.test(number);
+    }
+
     function sendMessage() {
-      const shopNumber = document.getElementById('shopNumber').value.trim();
-      const customerNumber = document.getElementById('customerNumber').value.trim();
+      let shopNumber = document.getElementById('shopNumber').value.trim();
+      let customerNumber = document.getElementById('customerNumber').value.trim();
 
       if (!shopNumber || !customerNumber) {
         alert('Please enter both phone numbers!');
         return;
       }
 
+      // Format numbers by adding default country code if missing
+      shopNumber = formatNumber(shopNumber);
+      customerNumber = formatNumber(customerNumber);
+
+      if (!isValidPhoneNumber(shopNumber)) {
+        alert('Please enter a valid Shopkeeper phone number with digits only (10-15 digits).');
+        return;
+      }
+
+      if (!isValidPhoneNumber(customerNumber)) {
+        alert('Please enter a valid Customer phone number with digits only (10-15 digits).');
+        return;
+      }
+
       const message = encodeURIComponent("Hello! Your order is ready to be received. Thank you for shopping with us!");
 
-      // WhatsApp API URL
       const whatsappURL = `https://wa.me/${customerNumber}?text=${message}`;
-
-      // Open WhatsApp in a new tab
       window.open(whatsappURL, '_blank');
-
-      // Optionally, notify the shopkeeper too (can be customized)
-      // const shopMessage = encodeURIComponent("You have successfully notified the customer.");
-      // const shopWhatsappURL = `https://wa.me/${shopNumber}?text=${shopMessage}`;
-      // window.open(shopWhatsappURL, '_blank');
     }
   </script>
 
