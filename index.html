@@ -346,12 +346,42 @@
 
         // Form submission
         document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you! Your booking request has been sent. We\'ll contact you within 1 hour.');
-            this.reset();
-        });
+    e.preventDefault();
+
+    // Get form values
+    const name = this.querySelector('input[type="text"]').value;
+    const phone = this.querySelector('input[type="tel"]').value;
+    const email = this.querySelector('input[type="email"]').value;
+    const service = this.querySelector('select').value;
+    const details = this.querySelector('textarea').value;
+
+    // Create WhatsApp message
+    const message = `🧼 *New Cleaning Booking Request*
+    
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+Service: ${service}
+Details: ${details}
+
+Please confirm the booking.`;
+
+    // Encode message for URL
+    const encodedMessage = encodeURIComponent(message);
+
+    // WhatsApp number (with country code, no + or spaces)
+    const whatsappNumber = "917823005570"; // Change if needed
+
+    // Redirect to WhatsApp
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+
+    // Reset form
+    this.reset();
+});
+
     </script>
 </body>
 </html>
+
 
 
