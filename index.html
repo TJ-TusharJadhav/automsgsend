@@ -112,6 +112,7 @@ font-weight:bold;
 cursor:pointer;
 }
 
+/* NAV BUTTONS */
 .nav{
 position:absolute;
 top:50%;
@@ -125,6 +126,37 @@ cursor:pointer;
 }
 .prev{left:10px}
 .next{right:10px}
+
+/* SERVICE INFO */
+.service-info{margin-top:70px;}
+.info-title{
+text-align:center;
+margin-bottom:40px;
+color:#007bff;
+font-size:1.8rem;
+}
+.info-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:25px;
+}
+.info-card{
+background:#fff;
+padding:25px;
+border-radius:15px;
+box-shadow:0 8px 25px rgba(0,0,0,0.08);
+transition:0.3s;
+}
+.info-card:hover{transform:translateY(-8px);}
+.info-card h4{
+color:#007bff;
+margin-bottom:15px;
+}
+.info-card ul{
+list-style:none;
+color:#555;
+}
+.info-card li{margin-bottom:8px;}
 
 /* BOOKING */
 .contact{
@@ -205,7 +237,7 @@ width:28px;
 </div>
 </section>
 
-<!-- AUTO SLIDER -->
+<!-- SERVICES -->
 <section id="services">
 <div class="container">
 <h2>Our Cleaning Services</h2>
@@ -248,6 +280,70 @@ width:28px;
 </div>
 
 <button class="nav next">&#10095;</button>
+</div>
+
+<!-- SERVICE INFO -->
+<div class="service-info">
+<h3 class="info-title">Service Details & Pricing Information</h3>
+
+<div class="info-grid">
+
+<div class="info-card">
+<h4>Sofa Cleaning</h4>
+<ul>
+<li>✔ Deep foam shampoo cleaning</li>
+<li>✔ Stain & odor removal</li>
+<li>✔ Fabric & leather safe chemicals</li>
+<li>⏱ Duration: 1-2 Hours</li>
+<li>💰 Starting From: ₹499</li>
+</ul>
+</div>
+
+<div class="info-card">
+<h4>Carpet Cleaning</h4>
+<ul>
+<li>✔ Steam cleaning technology</li>
+<li>✔ Dust & bacteria removal</li>
+<li>✔ Quick dry process</li>
+<li>⏱ Duration: 1-3 Hours</li>
+<li>💰 Starting From: ₹699</li>
+</ul>
+</div>
+
+<div class="info-card">
+<h4>Mattress Cleaning</h4>
+<ul>
+<li>✔ Dust mite treatment</li>
+<li>✔ Anti-bacterial sanitization</li>
+<li>✔ Deep suction extraction</li>
+<li>⏱ Duration: 1 Hour</li>
+<li>💰 Starting From: ₹599</li>
+</ul>
+</div>
+
+<div class="info-card">
+<h4>Water Tank Cleaning</h4>
+<ul>
+<li>✔ Sludge removal</li>
+<li>✔ High-pressure jet cleaning</li>
+<li>✔ Anti-bacterial wash</li>
+<li>⏱ Duration: 2-3 Hours</li>
+<li>💰 Starting From: ₹1499</li>
+</ul>
+</div>
+
+<div class="info-card">
+<h4>Car Interior Cleaning</h4>
+<ul>
+<li>✔ Seat shampooing</li>
+<li>✔ Dashboard polishing</li>
+<li>✔ Odor removal</li>
+<li>⏱ Duration: 2 Hours</li>
+<li>💰 Starting From: ₹999</li>
+</ul>
+</div>
+
+</div>
 </div>
 
 </div>
@@ -320,7 +416,7 @@ document.querySelector('.carousel').addEventListener('mouseenter',stopAuto);
 document.querySelector('.carousel').addEventListener('mouseleave',startAuto);
 startAuto();
 
-/* Swipe */
+/* Swipe Support */
 let startX=0;
 track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;});
 track.addEventListener('touchend',e=>{
