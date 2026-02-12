@@ -1,129 +1,355 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Order Ready Notification</title>
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="favicon.png" />
-
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  .container {
-    background: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    width: 340px;
-  }
-  .container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  input {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    box-sizing: border-box;
-  }
-  button {
-    width: 100%;
-    padding: 12px;
-    background: #25D366;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-top: 10px;
-  }
-  button:hover {
-    background: #20b858;
-  }
-  .note {
-    font-size: 12px;
-    color: #555;
-    margin-top: -6px;
-    margin-bottom: 12px;
-    text-align: center;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleanax - Professional Cleaning Services | Ahmedabad</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Navbar */
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-menu a:hover {
+            color: #007bff;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #007bff 0%, #00c6ff 100%);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 70px;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        .cta-button {
+            display: inline-block;
+            background: #ff6b35;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255,107,53,0.4);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255,107,53,0.6);
+        }
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #007bff;
+        }
+        /* Services */
+        .services {
+            background: #f8f9fa;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .service-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: all 0.3s;
+            border-top: 4px solid #007bff;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .service-card h3 {
+            color: #007bff;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+        .service-card p {
+            color: #666;
+        }
+        /* About */
+        .about {
+            background: white;
+            text-align: center;
+        }
+        .about p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #555;
+        }
+        /* Contact */
+        .contact {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+        }
+        .contact form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .contact input, .contact textarea {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.95);
+        }
+        .contact textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .contact button {
+            background: #ff6b35;
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .contact button:hover {
+            background: #e55a2b;
+            transform: translateY(-2px);
+        }
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+                padding: 2rem 0;
+            }
+            .nav-menu.active {
+                left: 0;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">🧼 Cleanax</div>
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-<div class="container">
-  <h2>Order Ready Notification</h2>
-  <input type="text" id="shopNumber" placeholder="Shopkeeper WhatsApp Number" />
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Sparkling Clean Homes & Offices</h1>
+            <p>Professional deep cleaning, sanitization, and disinfection services across Ahmedabad. Eco-friendly products, trained experts, 100% satisfaction guaranteed.</p>
+            <a href="#contact" class="cta-button">Book Cleaning Now →</a>
+        </div>
+    </section>
 
-  <input type="text" id="customerNumbers" placeholder="Customer WhatsApp Numbers" />
+    <section id="services" class="services">
+        <div class="container">
+            <h2>Our Cleaning Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>🏠 Residential Deep Cleaning</h3>
+                    <p>Complete home cleaning including bedrooms, kitchen, bathrooms, and living areas.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🏢 Commercial Cleaning</h3>
+                    <p>Office, retail stores, restaurants - keep your business spotless.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🛋️ Sofa & Carpet Cleaning</h3>
+                    <p>Steam cleaning for upholstery, mattresses, and carpets using hot water extraction.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🚿 Bathroom Sanitization</h3>
+                    <p>Deep cleaning and disinfection of bathrooms, toilets, and washbasins.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🍳 Kitchen Deep Clean</h3>
+                    <p>Degreasing ovens, exhausts, cabinets, and kitchen appliances.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🏗️ Post-Construction</h3>
+                    <p>Remove construction dust, paint, debris after renovation or building work.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <button onclick="sendMessage()">Send WhatsApp Messages</button>
-</div>
+    <section id="about" class="about">
+        <div class="container">
+            <h2>Why Choose Cleanax?</h2>
+            <p>With years of experience serving Ahmedabad residents and businesses, we use premium eco-friendly cleaning agents and employ certified professionals. Our services are customized to your needs with flexible scheduling and competitive pricing.[web:1][web:7]</p>
+        </div>
+    </section>
 
-<script>
-  const DEFAULT_COUNTRY_CODE = '91';
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Ready to Book? Get Free Quote</h2>
+            <form id="contactForm">
+                <input type="text" placeholder="Your Name *" required>
+                <input type="tel" placeholder="Phone Number *" required>
+                <input type="email" placeholder="Email Address">
+                <select required>
+                    <option value="">Select Service</option>
+                    <option>Residential Cleaning</option>
+                    <option>Office Cleaning</option>
+                    <option>Sofa/Carpet Cleaning</option>
+                    <option>Bathroom Sanitization</option>
+                    <option>Kitchen Cleaning</option>
+                </select>
+                <textarea placeholder="Additional Details (Optional)" rows="4"></textarea>
+                <button type="submit">Send Booking Request</button>
+            </form>
+        </div>
+    </section>
 
-  function formatNumber(number) {
-    let cleaned = number.replace(/\D/g, '');
-    if (cleaned.startsWith(DEFAULT_COUNTRY_CODE)) {
-      return cleaned;
-    }
-    return DEFAULT_COUNTRY_CODE + cleaned;
-  }
+    <footer>
+        <div class="container">
+            <p>🧼 Cleanax Cleaning Services | Serving Ahmedabad, Gujarat | © 2026 | Call: +91-XXXXXXXXXX</p>
+        </div>
+    </footer>
 
-  function isValidPhoneNumber(number) {
-    return /^\d{10,15}$/.test(number);
-  }
+    <script>
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
 
-  function sendMessage() {
-    let shopNumber = document.getElementById('shopNumber').value.trim();
-    let customerNumbersInput = document.getElementById('customerNumbers').value.trim();
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
-    if (!shopNumber || !customerNumbersInput) {
-      alert('Please enter the shopkeeper and customer phone numbers!');
-      return;
-    }
-
-    shopNumber = formatNumber(shopNumber);
-    if (!isValidPhoneNumber(shopNumber)) {
-      alert('Invalid shopkeeper number! Only digits allowed (10-15 digits).');
-      return;
-    }
-
-    const customerNumbers = customerNumbersInput.split(',')
-      .map(num => formatNumber(num.trim()))
-      .filter(num => num !== '');
-
-    if (customerNumbers.length === 0) {
-      alert('Please enter at least one valid customer number.');
-      return;
-    }
-
-    const invalidNumbers = customerNumbers.filter(num => !isValidPhoneNumber(num));
-    if (invalidNumbers.length > 0) {
-      alert('These customer numbers are invalid:\n' + invalidNumbers.join(', '));
-      return;
-    }
-
-    const message = encodeURIComponent("प्रिय ग्राहक, आपले कपडे दिलेल्या तारखेनुसार सुंदरपणे शिवले गेले आहेत. कृपया आपल्या सोयी प्रमाणे *एक्सपर्ट मेन्स टेलर* येथे येऊन घेऊ शकता. आम्ही नेहमी आपल्या सेवेची वाट पाहत आहोत!");
-
-    customerNumbers.forEach(number => {
-      const whatsappURL = `https://wa.me/${number}?text=${message}`;
-      window.open(whatsappURL, '_blank');
-    });
-  }
-</script>
-
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you! Your booking request has been sent. We\'ll contact you within 1 hour.');
+            this.reset();
+        });
+    </script>
 </body>
 </html>
